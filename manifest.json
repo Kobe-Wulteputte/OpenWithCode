@@ -1,7 +1,7 @@
 {
   "name": "Open with Code",
   "description": "Open source control web pages in vscode.dev",
-  "version": "0.1",
+  "version": "0.2",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
@@ -14,21 +14,26 @@
     },
     {
       "matches": ["*://github.com/*"],
-      "js": ["github.js"]
+      "js": ["modifiers/github.js"]
+    },
+    {
+      "matches": ["*://dev.azure.com/*"],
+      "js": ["modifiers/devops.js"]
     }
   ],
   "action": {
     "default_icon": {
-      "16": "/images/get_started16.png",
-      "32": "/images/get_started32.png",
-      "48": "/images/get_started48.png",
-      "128": "/images/get_started128.png"
-    }
+      "16": "/images/OpenWithCode16.png",
+      "32": "/images/OpenWithCode32.png",
+      "48": "/images/OpenWithCode48.png",
+      "128": "/images/OpenWithCode128.png"
+    },
+    "default_title": "Open repo in vscode.dev tab"
   },
   "icons": {
-    "16": "/images/get_started16.png",
-    "32": "/images/get_started32.png",
-    "48": "/images/get_started48.png",
-    "128": "/images/get_started128.png"
+    "16": "/images/OpenWithCode16.png",
+    "32": "/images/OpenWithCode32.png",
+    "48": "/images/OpenWithCode48.png",
+    "128": "/images/OpenWithCode128.png"
   }
 }

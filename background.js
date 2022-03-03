@@ -13,7 +13,7 @@ let redirectGH = (resp) => {
     return;
   }
   const url = new URL(resp.tab.url);
-  chrome.tabs.update(resp.tab.tabId, {
+  chrome.tabs.create({
     url: "https://vscode.dev/github" + url.pathname,
   });
 };
@@ -24,8 +24,13 @@ let redirectAZ = (resp) => {
     return;
   }
   const url = new URL(resp.tab.url);
-  chrome.tabs.update(resp.tab.tabId, {
-    url: "https://vscode.dev/azurerepos" + url.pathname,
+  const search = url.searchParams;
+  if (!search.get("version")) {
+    search.set("version", resp.version)
+  }
+  chrome.tabs.create({
+    url:
+      "https://vscode.dev/azurerepos" + url.pathname + "?" + search.toString(),
   });
 };
 
@@ -41,9 +46,9 @@ chrome.action.onClicked.addListener((tab) => {
   console.log(url);
 
   if (matchesGH(url)) {
-    chrome.tabs.sendMessage(tab.id, { tab: tab }, redirectGH);
+    chrome.tabs.sendMessage(tab.id, { tab: tab, page: "github" }, redirectGH);
   } else if (matchesAD(url)) {
-    chrome.tabs.sendMessage(tab.id, { tab: tab }, redirectAZ);
+    chrome.tabs.sendMessage(tab.id, { tab: tab, page: "devops" }, redirectAZ);
   } else {
     notFound(tab);
   }
